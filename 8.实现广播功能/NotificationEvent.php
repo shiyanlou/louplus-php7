@@ -42,7 +42,7 @@ class NotificationEvent implements ShouldBroadcast
      */
     public function broadcastAs()
     {
-        return 'moka';
+        return 'shiyanlou';
     }
 
     public function broadcastWith()
