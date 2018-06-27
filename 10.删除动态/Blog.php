@@ -154,6 +154,13 @@ class Blog extends \yii\db\ActiveRecord
         }
         return true;
     }
+    
+    public function afterDelete()
+    {
+        Comment::deleteAll(['blog_id' => $this->id]);
+    } 
+
+
 
     public function page($page, $options = []) 
     {
