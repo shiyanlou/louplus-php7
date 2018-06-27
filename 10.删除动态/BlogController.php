@@ -86,8 +86,8 @@ class BlogController extends \yii\web\Controller
 	    $blog = Blog::findOne($id);
 
 	    # 判断用户身份
-	    if ($blog->user_id == Yii::$app->user->id ) {
-	        Event::destroy(Blog::className(),$blog->id, Blog::className());
+	    if (!empty($blog) && $blog->user_id == Yii::$app->user->id ) {
+	        
 	        $blog->delete();
 	    }
 	    return $this->goHome();
