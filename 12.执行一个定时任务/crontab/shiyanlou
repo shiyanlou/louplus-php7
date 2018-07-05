@@ -21,5 +21,5 @@
 # 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/
 # 
 # For more information see the manual pages of crontab(5) and cron(8)
-* 3 * * * tar -g /var/log /home/shiyanlou/backup/date -d today + "%Y-%m-%d".tar.gz 
+* 3 * * * tar -g /var/log /home/shiyanlou/backup/$(date " + %Y-%m-%d ").tar.gz 
 # m h  dom mon dow   command
