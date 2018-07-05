@@ -23,8 +23,9 @@ class DispatcherTest extends TestCase
  
     public function testSayHello()
     {
-	$this->assertEquals('Hello', call::hello());
+	$this->assertEquals('Hello', Foo::call('sayHello', 'Say'));
     }
+	
     public static function setDownAfterClass()
     {
 	self::$obj = null;
