@@ -1,0 +1,53 @@
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+      - '8000:8000'
+    volumes:
+      - .:/srv/http/php-crawler
+    depends_on:
+      - mysql
+      - redis
+      - kafka
+
+  mysql:
+    image: mysql:5.7
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_DATABASE: php_crawler
+      MYSQL_USER: php_crawler
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: root_secret
+
+  redis:
+    image: redis:4
+    ports:
+      - '6379:6379'
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:3.2.0
+    container_name: zookeeper
+    hostname: zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    restart: always
+
+  kafka:
+    image: confluentinc/cp-kafka:3.2.0
+    hostname: kafka
+    container_name: kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - '9092:9092'
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://0.0.0.0:9092
+      LISTENERS: PLAINTEXT://0.0.0.0:9092
+    restart: always
